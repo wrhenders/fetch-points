@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   async function newSpend() {
-    const points = req.body.points;
+    const { points } = JSON.parse(req.body);
     const isValid = (): boolean => {
       return !isNaN(parseInt(points));
     };

@@ -41,8 +41,8 @@ export default function NewTransaction() {
 
   return (
     <Layout>
-      <h2>New Transaction</h2>
-      <form style={{ width: "60%", margin: "auto" }} onSubmit={handleSubmit}>
+      <h2 style={{ color: "#7C7C7C" }}>New Transaction</h2>
+      <form style={{ width: "60%" }} onSubmit={handleSubmit}>
         <label>Payer</label>
         <input
           id="payer"

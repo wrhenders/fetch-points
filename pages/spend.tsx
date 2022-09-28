@@ -18,13 +18,14 @@ export default function Spend() {
       points: parseInt(points),
     };
 
-    fetch(`${url}/api/transaction/`, {
+    fetch(`${url}/api/spend/`, {
       method: "POST",
       headers: { "Content-Type": "application.json" },
       body: JSON.stringify(data),
     })
       .then((res) => {
         if (res.status !== 200) throw Error("Incorrect inputs");
+        console.log(res);
         router.push("/");
       })
       .catch((err) => alert(err.message));
@@ -36,8 +37,8 @@ export default function Spend() {
 
   return (
     <Layout>
-      <h2>New Spend</h2>
-      <form style={{ width: "60%", margin: "auto" }} onSubmit={handleSubmit}>
+      <h2 style={{ color: "#7C7C7C" }}>New Spend</h2>
+      <form style={{ width: "60%" }} onSubmit={handleSubmit}>
         <label>Quantity:</label>
         <input
           id="points"

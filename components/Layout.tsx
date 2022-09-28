@@ -21,15 +21,14 @@ export default function Layout(props: Props) {
             <a>Points Tracker</a>
           </Link>
         </h1>
-        <h3 style={{ textAlign: "right" }}>
+        <span className={styles.navigation}>
           <Link href="/new">
-            <a>New Transaction</a>
+            <button>New Transaction</button>
           </Link>
-          <br />
           <Link href="/spend">
-            <a>Spend Points</a>
+            <button>Spend Points</button>
           </Link>
-        </h3>
+        </span>
         {props.children}
       </main>
     </div>
