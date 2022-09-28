@@ -25,6 +25,9 @@ export default function Spend() {
     })
       .then((res) => {
         if (res.status !== 200) throw Error("Incorrect inputs");
+        return res.json();
+      })
+      .then((res) => {
         console.log(res);
         router.push("/");
       })

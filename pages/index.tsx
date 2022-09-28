@@ -7,7 +7,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     method: "GET",
   });
   const balance = await balanceRes.json();
-  console.log(balance, typeof balance);
   return {
     props: { balance },
   };

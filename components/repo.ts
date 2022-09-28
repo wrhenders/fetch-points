@@ -4,7 +4,7 @@ import fs from "fs";
 const db = require("../db.json");
 let log: [{ payer: string; points: number; date: string; seen: boolean }] =
   db.log;
-let pointsMap = db.pointsMap;
+let pointsMap: { [payer: string]: number } = db.pointsMap;
 
 export const repo = {
   getBalance,
@@ -43,21 +43,22 @@ function newSpend(pointsToSpend: number) {
   const spentPoints: { [payer: string]: number } = {};
   for (let tx of log) {
     // if tx seen and used, continue
-    console.log(tx, pointsToSpend, spentPoints);
     if (tx.seen) continue;
 
     if (pointsToSpend > 0) {
       // if spending points is more than payer points and the tx has positive points
       // add tx and reduce spending points by tx amout and mark seen
       if (pointsToSpend >= tx.points && tx.points > 0) {
+        // check if exists in hashmap, if so subtract, if not begin with points taken
         spentPoints[tx.payer]
           ? (spentPoints[tx.payer] -= tx.points)
           : (spentPoints[tx.payer] = -tx.points);
+        // update pointsMap and points to spend
         pointsMap[tx.payer] -= tx.points;
         pointsToSpend -= tx.points;
         tx.seen = true;
         // else if spending points is more than payer points and the tx has negative points
-        // check if payer has points
+        // check if payer has points in SpentPoints, and its more than the negative tx
       } else if (pointsToSpend >= tx.points && tx.points < 0) {
         if (spentPoints[tx.payer]) {
           if (spentPoints[tx.payer] - tx.points < 0) {
@@ -65,11 +66,9 @@ function newSpend(pointsToSpend: number) {
             pointsMap[tx.payer] -= tx.points;
             pointsToSpend -= tx.points;
             tx.seen = true;
-          } else {
-            continue;
           }
         }
-        // else if spending points is less than payer points on tx
+        // else if spending points is less than payer points on the tx
         // add payer with remaining pointsToSpend, reduce points left in tx
       } else if (pointsToSpend < tx.points) {
         spentPoints[tx.payer]
@@ -83,7 +82,7 @@ function newSpend(pointsToSpend: number) {
   }
 
   // save data
-  saveData();
+  // saveData();
 
   // convert hashmap to array format and return
   const returnArr = [];
@@ -100,6 +99,8 @@ function currentBalance() {
   }
   return balance;
 }
+
+// write to JSON db
 function saveData() {
   fs.writeFileSync("db.json", JSON.stringify({ log, pointsMap }, null, 2));
 }

@@ -3,8 +3,3 @@ export interface Transaction {
   points: number;
   date: string;
 }
-
-export interface Payer {
-  payer: string;
-  points: number;
-}
