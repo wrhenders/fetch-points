@@ -14,6 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const payer = transaction.payer;
     const points = parseInt(transaction.points);
     const date = transaction.date;
+
     const isValid = (): boolean => {
       return (
         typeof payer == "string" &&
@@ -24,6 +25,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     };
 
     if (!isValid()) {
+      console.log("fail server valid check");
       return res
         .status(400)
         .json({ message: "Must have valid payer, points and date" });
@@ -33,6 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       repo.newTransaction(payer, points, date);
       return res.status(200).json({});
     } catch (error) {
+      console.log("catch block");
       return res.status(400).json({ message: error });
     }
   }
