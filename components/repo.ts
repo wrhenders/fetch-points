@@ -30,7 +30,7 @@ function newTransaction(payer: string, points: number, date: string) {
   pointsMap[payer] ? (pointsMap[payer] += points) : (pointsMap[payer] = points);
   if (pointsMap[payer] < 0) pointsMap[payer] = 0;
 
-  saveData();
+  // saveData();
 }
 
 // spend: takes point to spend, validates enough points
@@ -82,7 +82,7 @@ function newSpend(pointsToSpend: number) {
   }
 
   // save data
-  saveData();
+  // saveData();
 
   // convert hashmap to array format and return
   const returnArr = [];
