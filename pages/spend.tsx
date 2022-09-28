@@ -40,8 +40,8 @@ export default function Spend() {
 
   return (
     <Layout>
-      <h2 style={{ color: "#7C7C7C" }}>New Spend</h2>
-      <form style={{ width: "60%" }} onSubmit={handleSubmit}>
+      <h2>New Spend</h2>
+      <form onSubmit={handleSubmit}>
         <label>Quantity:</label>
         <input
           id="points"

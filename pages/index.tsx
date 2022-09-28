@@ -35,12 +35,7 @@ export default function Home({ balance }: Props) {
   return (
     <Layout>
       <h3>Current Balance: {total} points</h3>
-      <table
-        style={{
-          textAlign: "center",
-          padding: "10px",
-        }}
-      >
+      <table>
         <tbody>{displayBalance()}</tbody>
       </table>
     </Layout>
