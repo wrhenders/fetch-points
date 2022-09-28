@@ -6,11 +6,13 @@ const url = process.env.NEXT_PUBLIC_SERVER_URL;
 interface Transaction {
   payer: string;
   points: number;
+  date: string;
 }
 
 export default function NewTransaction() {
   const [payer, setPayer] = useState("");
   const [points, setPoints] = useState("");
+  const [date, setDate] = useState("");
 
   const router = useRouter();
 
@@ -23,6 +25,7 @@ export default function NewTransaction() {
     const data: Transaction = {
       payer,
       points: parseInt(points),
+      date,
     };
 
     fetch(`${url}/api/transaction/`, {
@@ -38,7 +41,7 @@ export default function NewTransaction() {
   };
 
   const isValid = (): boolean => {
-    return payer !== "" && !isNaN(parseInt(points));
+    return payer !== "" && !isNaN(parseInt(points)) && !isNaN(Date.parse(date));
   };
 
   return (
@@ -57,9 +60,17 @@ export default function NewTransaction() {
         <input
           id="points"
           type="text"
-          placeholder="Points..."
+          placeholder="Points"
           value={points}
           onChange={(e) => setPoints(e.target.value)}
+        />
+        <label>Timestamp:</label>
+        <input
+          id="date"
+          type="text"
+          placeholder="Date (In format '2020-11-02T14:00:00Z')"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
         <button type="submit">Submit</button>
       </form>
