@@ -9,7 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  async function newSpend() {
+  function newSpend() {
     const { points } = JSON.parse(req.body);
     const isValid = (): boolean => {
       return !isNaN(parseInt(points));
@@ -17,11 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!isValid()) {
       return res.status(400).json({ message: "Must have valid points" });
     }
-    try {
-      const spendData = await repo.newSpend(points);
-      return res.status(200).json({ spendData });
-    } catch (error) {
-      return res.status(400).json({ message: error });
-    }
+    const spendData = repo.newSpend(points);
+    return res.status(200).json({ spendData });
   }
 }

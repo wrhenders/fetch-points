@@ -82,7 +82,7 @@ function newSpend(pointsToSpend: number) {
   }
 
   // save data
-  // saveData();
+  saveData();
 
   // convert hashmap to array format and return
   const returnArr = [];
