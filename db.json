@@ -1,0 +1,34 @@
+{
+  "log": [
+    {
+      "payer": "Charlie",
+      "points": 300,
+      "date": "2018-11-02T14:00:00Z"
+    },
+    {
+      "payer": "Bob",
+      "points": 500,
+      "date": "2019-11-02T14:00:00Z"
+    },
+    {
+      "payer": "Bob",
+      "points": 100,
+      "date": "2020-11-02T14:00:00Z"
+    },
+    {
+      "payer": "Charlie",
+      "points": 200,
+      "date": "2020-11-02T14:00:00Z"
+    },
+    {
+      "payer": "Bob",
+      "points": 400,
+      "date": "2020-11-02T14:00:00Z"
+    }
+  ],
+  "currentBalance": 1500,
+  "pointsMap": {
+    "Bob": 1000,
+    "Charlie": 500
+  }
+}

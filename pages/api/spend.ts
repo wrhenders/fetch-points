@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ message: "Must have valid points" });
     }
     try {
-      const spendData = await repo.newTransaction(points);
+      const spendData = await repo.newSpend(points);
       return res.status(200).json({ spendData });
     } catch (error) {
       return res.status(400).json({ message: error });

@@ -10,19 +10,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   function newTransaction() {
-    const payer = req.body.payer;
-    const points = req.body.points;
-    const date = req.body.date;
+    const transaction = JSON.parse(req.body);
+    const payer = transaction.payer;
+    const points = parseInt(transaction.points);
+    const date = transaction.date;
     const isValid = (): boolean => {
       return (
-        payer !== "" && !isNaN(parseInt(points)) && !isNaN(Date.parse(date))
+        typeof payer == "string" &&
+        payer !== "" &&
+        !isNaN(points) &&
+        !isNaN(Date.parse(date))
       );
     };
+
     if (!isValid()) {
       return res
         .status(400)
         .json({ message: "Must have valid payer, points and date" });
     }
+
     try {
       repo.newTransaction(payer, points, date);
       return res.status(200).json({});

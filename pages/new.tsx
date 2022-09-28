@@ -1,13 +1,8 @@
 import Layout from "../components/Layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { Transaction } from "../interfaces";
 const url = process.env.NEXT_PUBLIC_SERVER_URL;
-
-interface Transaction {
-  payer: string;
-  points: number;
-  date: string;
-}
 
 export default function NewTransaction() {
   const [payer, setPayer] = useState("");
@@ -28,7 +23,7 @@ export default function NewTransaction() {
       date,
     };
 
-    fetch(`${url}/api/transaction/`, {
+    fetch(`${url}/api/new/`, {
       method: "POST",
       headers: { "Content-Type": "application.json" },
       body: JSON.stringify(data),
