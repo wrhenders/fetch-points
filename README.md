@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Inventory Manager
+
+Can be seen [on Vercel](https://fetch-points-fanx.vercel.app/)
+
+![Image](https://i.ibb.co/wgDsDTZ/Screenshot-2022-09-29-at-08-17-16-Points-Tracker.png)
+
+Points Tracker Web App tracks a users total reward points and allows them to be spent
+
+- Keeps a log of points trasactions sorted by timestamp
+- Allows insertion of new transactions
+- User can spend points and a balance of their points and payers remain
+
+Leverages Next.js to build and interactive Web App
 
 ## Getting Started
 
-First, run the development server:
+#### Prerequisites
+
+To get the app running locally, you will need Node installed.
+
+After installing [Node](https://nodejs.org/en/), run
+
+```bash
+npm install
+```
+
+#### Development Server
+
+To run a development server at http://localhost:3000 use
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Application Architecture
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- This app follows a mostly typical Next.js app structure, using /pages directory to create the structure and URL routing of the project
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  - I chose Next.js to use their server side rendering functionality to allow quick loads and functional API structure
 
-## Learn More
+  - The main page shows the balance and payer totals from the api/balance endpoint
 
-To learn more about Next.js, take a look at the following resources:
+  - The Layout component is used to create the navigation bar and structure of each page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - For a New Transaction, the frontend first checks that any data entry fits the necessary write parameters, then sends the data through the api/new enpoint to the repo component which adds to the transaction log and sorts at write, so that reads can happen faster
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - For a Spend, the balance is confirmed available before calling the repo component to walk the logs to determine the order of the spend. It creates a hashmap to log which payers will be used until the spend balance is met. It then updates the balances remaining from each payer, converts the hashmap to an array and returns the spend array to the console and shows remaining balance on the main screen
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  - The database is stored locally in a db.json file for testing, but on the saveData function has been commented out so that vercel can run in memory as it doesn't allow writes to hosted JSON files
