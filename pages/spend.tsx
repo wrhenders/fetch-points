@@ -24,7 +24,6 @@ export default function Spend() {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        if (res.status !== 200) throw Error("Incorrect inputs");
         return res.json();
       })
       .then((res) => {

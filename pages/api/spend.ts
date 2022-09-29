@@ -11,8 +11,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   function newSpend() {
     const { points } = JSON.parse(req.body);
+    const balance = repo.currentBalance();
+    const pointSpend = parseInt(points);
     const isValid = (): boolean => {
-      return !isNaN(parseInt(points));
+      return !isNaN(pointSpend) && pointSpend <= balance;
     };
     if (!isValid()) {
       return res.status(400).json({ message: "Must have valid points" });

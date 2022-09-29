@@ -28,8 +28,7 @@ export default function NewTransaction() {
       headers: { "Content-Type": "application.json" },
       body: JSON.stringify(data),
     })
-      .then((res) => {
-        if (res.status !== 200) throw Error("Incorrect inputs");
+      .then(() => {
         router.push("/");
       })
       .catch((err) => alert(err.message));

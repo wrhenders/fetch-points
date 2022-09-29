@@ -10,6 +10,7 @@ export const repo = {
   getBalance,
   newTransaction,
   newSpend,
+  currentBalance,
 };
 
 // get balance: returns current pointsMap
@@ -33,7 +34,8 @@ function newTransaction(payer: string, points: number, date: string) {
   // saveData();
 }
 
-// spend: takes point to spend, validates enough points
+// spend: takes point to spend, validates enough points,
+// walks log to determine where points get spent, returns array of payers
 function newSpend(pointsToSpend: number) {
   let balance = currentBalance();
   if (pointsToSpend > balance) {
@@ -44,8 +46,15 @@ function newSpend(pointsToSpend: number) {
   for (let tx of log) {
     // if tx seen and used, continue
     if (tx.seen) continue;
+    let payerPoints = pointsMap[tx.payer];
+    // if the payer is out of points, continue
+    if (payerPoints === 0) continue;
 
     if (pointsToSpend > 0) {
+      // if total payer points is less than tx points, then there is a skipped negative point
+      // so modify tx.points to not spend more than total
+      if (tx.points > payerPoints) tx.points = payerPoints;
+
       // if spending points is more than payer points and the tx has positive points
       // add tx and reduce spending points by tx amout and mark seen
       if (pointsToSpend >= tx.points && tx.points > 0) {
@@ -58,7 +67,7 @@ function newSpend(pointsToSpend: number) {
         pointsToSpend -= tx.points;
         tx.seen = true;
         // else if spending points is more than payer points and the tx has negative points
-        // check if payer has points in SpentPoints, and its more than the negative tx
+        // check if payer has points in spentPoints, and its more than the negative tx
       } else if (pointsToSpend >= tx.points && tx.points < 0) {
         if (spentPoints[tx.payer]) {
           if (spentPoints[tx.payer] - tx.points < 0) {
@@ -69,7 +78,7 @@ function newSpend(pointsToSpend: number) {
           }
         }
         // else if spending points is less than payer points on the tx
-        // add payer with remaining pointsToSpend, reduce points left in tx
+        // add remaining pointsToSpend to spentPoints, reduce points left on tx
       } else if (pointsToSpend < tx.points) {
         spentPoints[tx.payer]
           ? (spentPoints[tx.payer] -= pointsToSpend)
@@ -84,7 +93,7 @@ function newSpend(pointsToSpend: number) {
   // save data
   // saveData();
 
-  // convert hashmap to array format and return
+  // format spentPoints hashmap as an array and return
   const returnArr = [];
   for (let payer in spentPoints) {
     returnArr.push({ payer, points: spentPoints[payer] });
@@ -92,6 +101,7 @@ function newSpend(pointsToSpend: number) {
   return returnArr;
 }
 
+// sums balance of points from all payers, return points number
 function currentBalance() {
   let balance = 0;
   for (let payer in pointsMap) {
