@@ -1,4 +1,4 @@
-# Inventory Manager
+# Points Tracker
 
 Can be seen [on Vercel](https://fetch-points-fanx.vercel.app/)
 
