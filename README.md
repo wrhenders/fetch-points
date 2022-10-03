@@ -41,9 +41,6 @@ To run a development server at http://localhost:3000 use
 npm run dev
 ```
 
-The URL for the server is stored in a .env.local file.
-
-
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
 ## Application Architecture
