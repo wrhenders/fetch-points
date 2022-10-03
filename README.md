@@ -28,7 +28,7 @@ To the main directory, you will need to add
 ```bash
 .env.local
 ```
-and add
+in this environment variable file, add the text:
 ```bash
 NEXT_PUBLIC_SERVER_URL = http://localhost:3000
 ```
