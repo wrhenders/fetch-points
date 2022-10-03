@@ -24,6 +24,15 @@ After installing [Node](https://nodejs.org/en/), run
 npm install
 ```
 
+To the main directory, you will need to add 
+```bash
+.env.local
+```
+and add
+```bash
+NEXT_PUBLIC_SERVER_URL = http://localhost:3000
+```
+
 #### Development Server
 
 To run a development server at http://localhost:3000 use
@@ -32,11 +41,7 @@ To run a development server at http://localhost:3000 use
 npm run dev
 ```
 
-The URL for the server is stored in a .env.local file. 
-To the main directory, you will need to add 
-.env.local
-with the line of text
-NEXT_PUBLIC_SERVER_URL = http://localhost:3000
+The URL for the server is stored in a .env.local file.
 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
